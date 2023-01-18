@@ -3,10 +3,32 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.sns.post.dao.PostDAO">
+ 
+ 	<!-- 테스트 -->
  	<select id="selectPostListTest" resultType="map">
  		SELECT
  			*
  		FROM
  		 	`post`
  	</select>
+ 	
+ 	<!-- 글쓰기 -->
+ 	<insert id="insertPost" parameterType="map">
+ 		INSERT INTO `post`
+ 		(
+	 		`userId`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			,#{content}
+ 			,#{imgPath}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
  </mapper>

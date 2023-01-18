@@ -1,0 +1,16 @@
+@charset "UTF-8";
+header{height: 70px;  background: linear-gradient(purple, 5%, pink);}
+.contents{min-height: 500px;}
+
+.box{width: 450px; min-height: 300px; }
+
+.loginBox{width: 420px; min-height:250px; background: #FDF5E6;}
+
+.boxColor{background: #FAFAD2;}
+
+.joinBox{width: 420px; min-height:250px; background: #FAFAFA; box-shadow: 5px 5px 5px 2px #dcdcdc;}
+
+.findPasswordBox{min-width: 420px; min-height:250px; background: #FAFAFA; box-shadow: 5px 5px 5px 2px #dcdcdc;}
+
+.miniBox{width: 95px; height: 24px;}
+
