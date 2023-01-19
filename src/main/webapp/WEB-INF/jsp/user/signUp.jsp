@@ -6,7 +6,7 @@
 		<h3 class="font-weight-bold mt-3">회원가입</h3>
 
 		<div class="joinBox">
-			<form action="/user/sign_up" method="POST" id="signUpForm">
+			<form action="/user/sign_up" method="post" id="signUpForm">
 
 				<div class="p-3">
 				
@@ -52,7 +52,7 @@
 
 					<!-- 회원가입 버튼 -->
 					<div class="d-flex justify-content-center pt-3">
-						<button type="submit" class="btn btn-primary w-100" id="signUpBtn">가입하기</button>
+						<button type="button" class="btn btn-primary w-100" id="signUpBtn">가입하기</button>
 					</div>
 				</div>
 
@@ -129,6 +129,7 @@
 		
 		// 회원가입 버튼
 		$('#signUpBtn').on('click',function(){
+			
 			let loginId = $('input[name=loginId]').val().trim();
 			let password = $('#password').val();
 			let recheckPassword = $('#recheckPassword').val();
@@ -137,43 +138,46 @@
 			
 			if(loginId == ''){
 				alert("아이디를 입력해주세요.");
-				return false;
+				return;
 			}
 			if(password == '' || recheckPassword ==''){
 				alert("비밀번호를 입력해주세요.");
-				return false;
+				return;
 			}
 			if(password != recheckPassword){
 				alert("비밀번호가 일치하지 않습니다.");
-				return false;
+				return;
 			}
 			if (name == ''){
 				alert("이름을 입력해주세요.");
-				return false;
+				return;
 			}
 			if(email == ''){
 				alert("이메일을 입력해주세요.");
-				return false;
+				return;
 			}
 			if( $('#idCheckOk').hasClass('d-none')){
 				alert("아이디 중복확인을 다시 해주세요.");
-				return false;
+				return;
 			}
 			
 			// ajax통신
-			let url = $(this).attr("action");
-			let params = $(this).serialize();
-			//consol.log(params);
-			
-			$.post(url, params)
-			.done(function(data) {
-				if (data.code == 1) {
-					alert(loginId + "님 환영합니다! 로그인을 해주세요!");
-					location.href = "/user/sign_in_view";
-				} else {
-					alert(data.errorMessage);
+			$.ajax({
+				type:"POST"
+				,url:"/user/sign_up"
+				,data:{"loginId":loginId, "password":password, "name":name, "email":email}
+				,success:function(data){
+					if (data.code == 1) {
+						alert(loginId + "님 환영합니다! 로그인을 해주세요!");
+						location.href = "/user/sign_in_view";
+					} else {
+						alert(data.errorMessage);
+					}
 				}
-			});//->ajax통신 끝
+				,error:function(e){
+					alert("에러" + e);
+				}
+			});//->회원가입 ajax끝 
 		}); //-> 회원가입 버튼 누를시 끝
 	});//->document 끝
 </script>

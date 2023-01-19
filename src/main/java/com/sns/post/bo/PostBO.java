@@ -30,7 +30,7 @@ public class PostBO {
 	}
 	
 	// 글 목록(타임라인)
-	public List<Post> getPostByUserId(int userId){
-		return postDAO.selectPostByUserId(userId);
+	public List<Post> getPostList(){
+		return postDAO.selectPostList();
 	}
 }

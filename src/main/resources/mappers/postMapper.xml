@@ -33,7 +33,7 @@
  	</insert>
  	
  	<!-- 글 목록 -->
- 	<select id="selectPostByUserId" parameterType="int" resultType="com.sns.post.model.Post">
+ 	<select id="selectPostList" parameterType="int" resultType="com.sns.post.model.Post">
  		SELECT
  			`id`
 			,`userId`
@@ -43,8 +43,7 @@
 			,`updatedAt`
 		FROM
 			`post`
-		WHERE
-			`userId` = #{userId}
+		
 		ORDER BY `id` DESC
  	</select>
  </mapper>

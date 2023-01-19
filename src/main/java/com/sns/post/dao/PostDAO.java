@@ -23,5 +23,5 @@ public interface PostDAO {
 			@Param("imgPath") String imgPath);
 	
 	// 글목록
-	public List<Post> selectPostByUserId(int userId);
+	public List<Post> selectPostList();
 }

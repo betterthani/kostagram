@@ -65,7 +65,7 @@ public class UserRestController {
 		
 		userBO.addUserSignupByLoginIdPasswordNameEmail(loginId, hashedPassword, name, email);
 		
-		Map<String,Object> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
 		result.put("code", 1);
 		result.put("result", "성공");
 		

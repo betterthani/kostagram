@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sns.comment.bo.CommentBO;
+import com.sns.comment.model.Comment;
 import com.sns.post.bo.PostBO;
 import com.sns.post.model.Post;
 
@@ -20,18 +22,19 @@ public class TimeLineController {
 	@Autowired
 	private PostBO postBO;
 	
+	@Autowired
+	private CommentBO commentBO;
+	
 	// localhost:8080/timeline/timeline_view
 	// 타임라인 화면
 	@GetMapping("/timeline_view")
-	public String timelineView(Model model,HttpSession session) {
+	public String timelineView(Model model) {
 		
-		Integer userId = (Integer)session.getAttribute("userId");
-		if(userId == null) {
-			return "redirect:/user/sign_in_view";
-		}
-		List<Post> postList = postBO.getPostByUserId(userId);
+		
+		List<Post> postList = postBO.getPostList();
+		List<Comment> commentList = commentBO.getCommentList();
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("postList",postList);
-		
 		model.addAttribute("viewName","timeline/timeLine");
 		
 		return "template/layout";

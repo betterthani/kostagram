@@ -74,6 +74,7 @@
 	
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
+						<c:forEach var="comment" items="${commentList}">
 						<div class="card-comment m-1">
 							<span class="font-weight-bold">댓글쓰니:</span>
 							<span>댓글 내용11111</span>
@@ -83,12 +84,15 @@
 								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
 							</a>
 						</div>
+						</c:forEach>
 	
 						<%-- 댓글 쓰기 --%>
+						<c:if test="${not empty userId}">
 						<div class="comment-write d-flex border-top mt-2">
-							<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"/> 
-							<button type="button" class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button>
+							<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"> 
+							<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
 						</div>
+						</c:if>
 					</div>
 					<%--// 댓글 목록 끝 --%>
 				</div>
@@ -165,7 +169,7 @@
 				, success:function(data){
 					if(data.code == 1){
 						alert("게시물이 저장되었습니다.");
-						location.href ="/timeline/timeline_view"
+						location.href ="/timeline/timeline_view";
 					} else {
 						alert(data.errorMessage);
 					}
@@ -175,5 +179,39 @@
 				}
 			}); //-> 게시버튼 ajax끝			
 		});//->게시버튼 끝
+		
+		// 댓글 쓰기
+		$('.comment-btn').on('click',function(){
+			//alert(1111);
+			let postId = $(this).data('post-id');
+			// 지금 클릭된 게시버튼의 형제인 input 태그를 가져온다. (siblings)
+			let comment = $(this).siblings('input').val().trim(); // 클릭한 아이와 형제의 input태그값(왜냐면 현재 지금 n개의 값이 있기때문에 id, class의 값으로 지정 불가)
+			
+			if(comment == '') {
+				alert("댓글을 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"POST"
+				,url:"/comment/create"
+				,data:{"postId":postId, "content":comment}
+				,success:function(data){
+					if(data.code == 100){
+						document.location.reload(true);
+					} else if(data.code == 500) {
+						alert(data.result);
+						location.href ="/user/sign_in_view";
+					} else {
+						alert(data.errorMessage);
+					}
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});//-> 댓글 ajax통신
+			
+		});//->댓글게시 버튼 끝
 	});//-> 도큐먼트 끝
 </script>
