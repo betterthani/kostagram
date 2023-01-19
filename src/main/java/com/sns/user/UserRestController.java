@@ -56,19 +56,19 @@ public class UserRestController {
 	 */
 	@PostMapping("/sign_up")
 	public Map<String, Object> signUp(
-			@RequestParam("loginId") String loginId
-			,@RequestParam("password") String password
-			,@RequestParam("name") String name
-			,@RequestParam("email") String email
+			@RequestParam("loginId") String loginId,
+			@RequestParam("password") String password,
+			@RequestParam("name") String name,
+			@RequestParam("email") String email
 			){
-		Map<String,Object> result = new HashMap<>();
-		
 		String hashedPassword = EncryptUtils.md5(password);
 		
 		userBO.addUserSignupByLoginIdPasswordNameEmail(loginId, hashedPassword, name, email);
 		
+		Map<String,Object> result = new HashMap<>();
 		result.put("code", 1);
 		result.put("result", "성공");
+		
 		return result;
 	}
 	

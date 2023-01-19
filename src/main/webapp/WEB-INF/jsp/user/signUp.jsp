@@ -114,8 +114,8 @@
 		});//->id길이 제한끝
 		
 		$('#recheckPassword').on('input',function(){
-			let password = $('#password').val().trim();
-			let recheckPassword = $('#recheckPassword').val().trim();
+			let password = $('#password').val();
+			let recheckPassword = $('#recheckPassword').val();
 			$('#passwordCheckDuplicated').addClass('d-none');
 			
 			if(recheckPassword ==''){
@@ -127,10 +127,11 @@
 			}
 		});//-> 비밀번호 리체크박스 끝
 		
+		// 회원가입 버튼
 		$('#signUpBtn').on('click',function(){
 			let loginId = $('input[name=loginId]').val().trim();
-			let password = $('#password').val().trim();
-			let recheckPassword = $('#recheckPassword').val().trim();
+			let password = $('#password').val();
+			let recheckPassword = $('#recheckPassword').val();
 			let name = $('#name').val().trim();
 			let email = $('#email').val().trim();
 			
@@ -160,15 +161,15 @@
 			}
 			
 			// ajax통신
-			let url = $(this).attr('action');
+			let url = $(this).attr("action");
 			let params = $(this).serialize();
-			consol.log(params);
+			//consol.log(params);
 			
 			$.post(url, params)
-			.done(function(data){
-				if(data.code == 1){
+			.done(function(data) {
+				if (data.code == 1) {
 					alert(loginId + "님 환영합니다! 로그인을 해주세요!");
-					//location.href = "/user/sign_in_view";
+					location.href = "/user/sign_in_view";
 				} else {
 					alert(data.errorMessage);
 				}

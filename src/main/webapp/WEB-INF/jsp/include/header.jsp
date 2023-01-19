@@ -4,15 +4,22 @@
 <div class="d-flex align-items-center justify-content-between w-100">
 	<!-- 로고 영역 -->
 	<div>
-		<h1>kostargram</h1>
+		<h1><a href="/timeline/timeline_view" id="headerLogo" class="text-dark">kostargram</a></h1>
 	</div>
 	
 	<!-- 로그인 정보 : 로그인시 보일수 있게 -->
 
 	<c:if test="${not empty userId}">
 		<div class="mr-3">
-			<span>${userName}님 안녕하세요.</span> <a href="/user/sign_out"
-				class="ml-2 font-weight-bold">로그아웃</a>
+			<span><a href="/user/individual_page_view" class="text-dark font-weight-bold">${userName}</a>님 안녕하세요.</span> 
+			<a href="/user/sign_out" class="ml-2 font-weight-bold">로그아웃</a>
 		</div>
 	</c:if>
+	
+	<c:if test="${empty userId}">
+		<div class="mr-3">
+			<a href="/user/sign_in_view" class="font-weight-bold">로그인</a>
+		</div>
+	</c:if>
+	
 </div>

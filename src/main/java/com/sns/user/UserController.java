@@ -62,5 +62,22 @@ public class UserController {
 		return "redirect:/user/sign_in_view";
 	}
 	
+	/**
+	 * 개인 페이지
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/individual_page_view")
+	public String individualPageView(Model model, HttpSession session) {
+		String userLoginId = (String) session.getAttribute("userLoginId");
+		if(userLoginId == null) {
+			return "redirect:/user/sign_in_view";
+		}
+		model.addAttribute("userLoginId", userLoginId);
+		model.addAttribute("viewName", "user/individualPage");
+		
+		return "template/layout";
+	}
 	
 }
