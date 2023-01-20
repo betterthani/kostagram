@@ -56,9 +56,18 @@
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
 						<a href="#" onclick="return false" class="like-btn" data-post-id="${card.post.id}">
-						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
+						<c:choose>
+							<c:when test="${card.filledLike}">
+								<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="full heart">
+							</c:when>
+							<c:otherwise>
+								<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
+							</c:otherwise>
+						</c:choose>
 							좋아요 10개
 						</a>
+						
+						
 					</div>
 	
 					<%-- 글 --%>
@@ -220,7 +229,6 @@
 			//alert(1111);
 			let postId = $(this).data('post-id');
 			//alert(postId);
-			
 			$.ajax({
 				url:"/like/" + postId
 				,data:{"postId":postId}
