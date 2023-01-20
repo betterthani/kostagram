@@ -46,4 +46,45 @@
 		
 		ORDER BY `id` DESC
  	</select>
+ 	
+ 	<!-- 사용자 글 가져오기(개인홈페이지) -->
+ 	<select id="selectPostListByUserId" parameterType="int" resultType="com.sns.post.model.Post">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+ 	</select>
+ 	
+ 	<!-- 게시글 개수 가져오기 -->
+ 	<select id="selectPostCountByUserId" parameterType="int" resultType="int">
+ 		SELECT
+ 			COUNT(*)
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+ 	</select>
+ 	
+ 	<!-- 글 한개 가져오기 -->
+ 	<select id="selectPostByPostId" parameterType="int" resultType="com.sns.post.model.Post">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+ 	</select>
  </mapper>

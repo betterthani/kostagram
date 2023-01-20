@@ -30,7 +30,6 @@ public class TimeLineController {
 	@GetMapping("/timeline_view")
 	public String timelineView(Model model) {
 		
-		
 		List<Post> postList = postBO.getPostList();
 		List<Comment> commentList = commentBO.getCommentList();
 		model.addAttribute("commentList", commentList);

@@ -32,4 +32,9 @@ public class UserBO {
 		return userDAO.selectUserByLoginIdPassword(loginId, Password);
 	}
 	
+	// 유저정보(개인페이지)
+	public User getUserByUserId(int userId) {
+		return userDAO.selectUserByUserId(userId);
+	}
+	
 }

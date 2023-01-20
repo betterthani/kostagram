@@ -24,4 +24,13 @@ public interface PostDAO {
 	
 	// 글목록
 	public List<Post> selectPostList();
+	
+	// 게시글 내용 갖고오기
+	public List<Post> selectPostListByUserId(int userId);
+	
+	// 게시글 개수
+	public int selectPostCountByUserId(int userId);
+	
+	// 글 한개 가져오기
+	public Post selectPostByPostId(int postId);
 }

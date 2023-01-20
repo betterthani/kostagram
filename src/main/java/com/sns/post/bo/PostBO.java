@@ -33,4 +33,19 @@ public class PostBO {
 	public List<Post> getPostList(){
 		return postDAO.selectPostList();
 	}
+	
+	// 글 가져오기 (개인홈페이지)
+	public List<Post> getPostListByUserId(int userId) {
+		return postDAO.selectPostListByUserId(userId);
+	}
+	
+	// 게시글 개수 가져오기(개인홈페이지)
+	public int getPostCountByUserId(int userId) {
+		return postDAO.selectPostCountByUserId(userId);
+	}
+	
+	// 글 한개 가져오기
+	public Post getPostByPostId(int postId) {
+		return postDAO.selectPostByPostId(postId);
+	}
 }
