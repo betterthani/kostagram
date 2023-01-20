@@ -27,7 +27,7 @@
 			AND `userId` = #{userId}
  	</delete>
  	
- 	<select id="selectLikeByUserIdPostId" parameterType="map" resultType="int">
+ 	<select id="selectLikeByUserIdPostId" parameterType="map" resultType="boolean">
  		SELECT
  			COUNT(*)
  		FROM
@@ -36,6 +36,15 @@
 			`postId` = #{postId}
 			AND `userId` = #{userId}
  			
+ 	</select>
+ 	
+ 	<select id="selectLikeByPostId" parameterType="int" resultType="int">
+ 		SELECT
+ 			COUNT(*)
+ 		FROM
+ 			`like`
+ 		WHERE
+			`postId` = #{postId}
  	</select>
  	
  </mapper>

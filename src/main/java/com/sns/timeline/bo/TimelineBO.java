@@ -55,6 +55,10 @@ public class TimelineBO {
 			boolean filledLike = likeBO.getLikeByUserIdPostId(post.getUserId(), post.getId());
 			card.setFilledLike(filledLike);
 			
+			// 좋아요 개수
+			int likeCount = likeBO.getLikeByPostId(post.getId());
+			card.setLikeCount(likeCount);
+			
 			// 카드 리스트에 채우기 !!!!!!!!!!!
 			cardViewList.add(card);
 		}

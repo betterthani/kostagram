@@ -25,5 +25,10 @@ public class LikeBO {
 		return likeDAO.selectLikeByUserIdPostId(userId, postId);
 	}
 	
+	// 좋아요 카운트
+	public int getLikeByPostId(int postId) {
+		return likeDAO.selectLikeByPostId(postId);
+	}
+	
 	
 }
