@@ -22,7 +22,7 @@
  		)
  	</insert>
  	
- 	<select id="selectCommentList" resultType="com.sns.comment.model.Comment">
+ 	<select id="selectCommentListByPostId" resultType="com.sns.comment.model.Comment" parameterType="int">
  		SELECT
  			`id`
  			,`postId`
@@ -32,6 +32,21 @@
 			,`updatedAt`
 		FROM
 			`comment`
+		WHERE
+			`postId` = #{postId}
+ 	</select>
  	
+ 	<select id="generateCommentViewListByPostId" resultType="com.sns.comment.model.Comment" parameterType="int">
+ 		SELECT
+ 			`id`
+ 			,`postId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`
+		WHERE
+			`postId` = #{postId}
  	</select>
  </mapper>

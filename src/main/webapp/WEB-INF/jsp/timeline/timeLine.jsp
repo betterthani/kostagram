@@ -27,16 +27,16 @@
 		<%--// 글쓰기 영역 끝 --%>
 
 		<%-- 타임라인 영역 --%>
-		<c:forEach var="post" items="${postList}">
+		<c:forEach var="card" items="${cardList}">
 			<div class="timeline-box my-5">
 				<%-- 카드1 --%>
 				<div class="card border rounded mt-3">
 					<%-- 글쓴이, 더보기(삭제) --%>
 					<div class="p-2 d-flex justify-content-between">
-						<span class="font-weight-bold">${post.userId}</span>
+						<span class="font-weight-bold">${card.user.loginId}</span>
 	
 						<%-- 더보기 --%>
-						<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${post.id}">
+						<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
 							<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 						</a>
 					</div>
@@ -44,18 +44,18 @@
 					<%-- 카드 이미지 --%>
 					<div class="card-img">
 					<c:choose>
-						<c:when test="${empty post.imgPath}">
+						<c:when test="${empty card.post.imgPath}">
 							<img src="/static/img/timeline/noimg.gif" class="w-100" alt="본문 이미지">
 						</c:when>
 						<c:otherwise>
-							<img src="${post.imgPath}" class="w-100" alt="본문 이미지">
+							<img src="${card.post.imgPath}" class="w-100" alt="본문 이미지">
 						</c:otherwise>
 					</c:choose>
 					</div>
 	
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" class="like-btn">
+						<a href="#" onclick="return false" class="like-btn" data-post-id="${card.post.id}">
 						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 							좋아요 10개
 						</a>
@@ -63,8 +63,8 @@
 	
 					<%-- 글 --%>
 					<div class="card-post m-3">
-						<span class="font-weight-bold">${post.userId}</span>
-						<span>${post.content}</span>
+						<span class="font-weight-bold">${card.user.loginId}</span>
+						<span>${card.post.content}</span>
 					</div>
 	
 					<%-- 댓글 --%>
@@ -74,25 +74,24 @@
 	
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
-						<c:forEach var="comment" items="${commentList}">
+					
+					<%-- 댓글 내용 --%>
+					<c:forEach var="commentView" items="${card.commentList}">
 						<div class="card-comment m-1">
-							<c:if test="${comment.postId eq post.id}">
-								<span class="font-weight-bold">${comment.userId}</span>
-								<span>${comment.content}</span>
+								<span class="font-weight-bold">${commentView.user.loginId}:</span>
+								<span>${commentView.comment.content}</span>
 							
 								<%-- 댓글 삭제 버튼 --%>
 								<a href="#" class="commentDelBtn">
 									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
 								</a>
-							</c:if>
 						</div>
-						</c:forEach>
-	
+					</c:forEach>
 						<%-- 댓글 쓰기 --%>
 						<c:if test="${not empty userId}">
 							<div class="comment-write d-flex border-top mt-2">
 								<input type="text" class="form-control border-0 mr-2" placeholder="댓글 달기"> 
-								<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
+								<button type="button" class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button>
 							</div>
 						</c:if>
 					</div>
@@ -215,5 +214,32 @@
 			});//-> 댓글 ajax통신
 			
 		});//->댓글게시 버튼 끝
+		
+		// 좋아요 버튼 누르기
+		$('.like-btn').on('click',function(){
+			//alert(1111);
+			let postId = $(this).data('post-id');
+			//alert(postId);
+			
+			$.ajax({
+				url:"/like/" + postId
+				,data:{"postId":postId}
+				,success:function(data){
+					if(data.code == 500){
+						alert(data.errorMessage);
+						location.href ="/user/sign_in_view";
+					} else if (data.code == 1){
+						document.location.reload(true);
+					} else {
+						alert(data.result);
+					}
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
+		});//->좋아요 버튼 끝
+		
 	});//-> 도큐먼트 끝
 </script>
