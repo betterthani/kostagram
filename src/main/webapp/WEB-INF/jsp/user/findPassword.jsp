@@ -16,12 +16,6 @@
 						<input type="text" id="loginId" name="loginId" class="form-control col-9" placeholder="ID를 입력해주세요">
 					</div>
 					
-					<!-- 이름 박스 -->
-					<div class="d-flex align-items-center mb-3">
-						<div class="font-weight-bold miniBox">이름</div> 
-						<input type="name" id="name" name="name" class="form-control col-9" placeholder="이름을 입력해주세요">
-					</div>
-
 					<!-- 이메일 박스 -->
 					<div class="d-flex align-items-center mb-3">
 						<div class="font-weight-bold miniBox">이메일</div> 
@@ -54,15 +48,9 @@
 		$('#findPasswordBtn').on('click',function(){
 			//validation
 			let loginId = $('#loginId').val().trim();
-			let name = $('#name').val().trim();
 			let email = $('#email').val().trim();
 			if(loginId == ''){
 				alert("아이디를 입력해주세요.");
-				return;
-			}
-			
-			if(name == ''){
-				alert("이름을 입력해주세요.");
 				return;
 			}
 			
@@ -81,7 +69,7 @@
 				// request
 				type:"POST"
 				,url : "/user/find_password"
-				,data:{"loginId":loginId, "name":name, "email":email}
+				,data:{"loginId":loginId, "email":email}
 				
 				//response
 				,success:function(data){
@@ -107,20 +95,32 @@
 			});//->ajax통신 끝
 		});//->비밀번호 찾기버튼 끝
 		
+		// 비밀번호 변경
 		$('#changePasswordBtn').on('click',function(){
+			let loginId = $('#loginId').val().trim();
 			let password = $('#password').val().trim();
+			let email = $('#email').val().trim();
 			
 			$.ajax({
 				// request
 				type:"POST"
 				,url:"/user/passwordUpdate"
-				,data:{"password":password}
+				,data:{"loginId":loginId,"password":password,"email":email}
+			
 				//response
 				, success:function(data){
-					
+					if(data.code == 1){
+						alert("비밀번호가 변경되었습니다.");
+						location.href="/user/sign_in_view";
+					} else if (data.code == 500){
+						alert("비밀번호 변경 실패했습니다. 관리자에 문의해주세요.");
+					} else {
+						alert(data.result);
+					}
 				}
-				, error:function(e){
-					
+				, error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
 				}
 			}); //-> 비밀번호 변경 ajax끝
 		});//-> 비밀번호 변경 버튼 끝

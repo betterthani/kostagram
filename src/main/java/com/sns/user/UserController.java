@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sns.post.bo.PostBO;
-import com.sns.post.model.Post;
 import com.sns.user.bo.UserBO;
 import com.sns.user.model.User;
+import com.sns.user.model.UserPage;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -79,35 +80,36 @@ public class UserController {
 	/**
 	 * 개인 페이지
 	 * @param model
+	 * @param userId
 	 * @param session
 	 * @return
 	 */
 	@GetMapping("/individual_page_view")
-	public String individualPageView(Model model, HttpSession session) {
-		Integer userId = (Integer) session.getAttribute("userId");
-		if(userId == null) {
-			return "redirect:/user/sign_in_view";
+	public String individualPageView(
+			Model model,
+			@RequestParam("userId") int userId, 
+			HttpSession session) {
+		
+		// 로그인된 id
+		Integer sessionId = (Integer) session.getAttribute("userId"); 
+		if(sessionId == null){ 
+		 return "redirect:/user/sign_in_view"; 
 		}
-		model.addAttribute("userId", userId);
-		
-		// 유저정보(프로필, 아이디, 상태메세지)
-		User user = userBO.getUserByUserId(userId);
-		model.addAttribute("user", user);
-		
-		// 게시물 개수 가져오기
-		int count = postBO.getPostCountByUserId(userId);
-		model.addAttribute("count", count);
-		
-		// 게시물 내용 갖고오기
-		List<Post> postList = postBO.getPostListByUserId(userId);
-		model.addAttribute("postList",postList);
-		
+		model.addAttribute("sessionId",sessionId);
+		 
+		List<UserPage> userPageList = userBO.generateUserPage(userId);
+		model.addAttribute("userPageList",userPageList);
 		model.addAttribute("viewName", "user/individualPage");
 		
 		return "template/layout";
 	}
 	
-	// 프로필 변경 화면
+	/**
+	 * 프로필 변경 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/profile_edit_view")
 	public String profileEditView(Model model, HttpSession session) {
 		Integer userId = (Integer) session.getAttribute("userId");

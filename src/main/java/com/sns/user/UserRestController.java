@@ -83,11 +83,12 @@ public class UserRestController {
 	 * @return
 	 */
 	@PostMapping("/find_password")
-	public Map<String, Object> findPassword(@RequestParam("loginId") String loginId, @RequestParam("name") String name,
+	public Map<String, Object> findPassword(
+			@RequestParam("loginId") String loginId,
 			@RequestParam("email") String email) {
 		Map<String, Object> result = new HashMap<>();
 		// select DB
-		boolean findPassword = userBO.findPasswordByIdNameEmail(loginId, name, email);
+		boolean findPassword = userBO.findPasswordByIdNameEmail(loginId, email);
 		if (findPassword) {
 			// 회원정보가 있을때
 			result.put("result", true);
@@ -100,6 +101,48 @@ public class UserRestController {
 
 		return result;
 	}
+	
+	/**
+	 * 비밀번호 변경 API
+	 * @param password
+	 * @param loginId
+	 * @param email
+	 * @return
+	 */
+	@PostMapping("/passwordUpdate")
+	public Map<String, Object> userPasswordUpdate(
+			@RequestParam("password") String password,
+			@RequestParam("loginId") String loginId,
+			@RequestParam("email") String email
+			){
+		
+		String hashedPassword = EncryptUtils.md5(password);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// db select (loginId, email)
+		int row = userBO.getPasswordByloginIdEmail(loginId, email);
+		
+		// db password update
+		boolean updatePassword = userBO.updatePassword(hashedPassword, loginId);
+		
+		if(row > 0) {
+			// 조회가능할때
+			if(updatePassword) {
+				// 업데이트 성공
+				result.put("code",1);
+			} else {
+				// 업데이트 실패
+				result.put("code", 500);
+			}
+		} else {
+			// 조회되지 않을때
+			result.put("result", "존재하지 않는 ID입니다.");
+		}
+		
+		return result;
+	}
+	
 
 	/**
 	 * 로그인 API
@@ -156,7 +199,12 @@ public class UserRestController {
 	 * }
 	 */
 
-	// 회원 탈퇴 API
+	/**
+	 * 회원 탈퇴 API
+	 * @param password
+	 * @param session
+	 * @return
+	 */
 	@DeleteMapping("/withdrawal")
 	public Map<String, Object> userWithdrawal(@RequestParam("password") String password, HttpSession session) {
 
@@ -183,5 +231,6 @@ public class UserRestController {
 
 		return result;
 	}
+	
 
 }

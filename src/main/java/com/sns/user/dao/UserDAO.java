@@ -20,7 +20,6 @@ public interface UserDAO {
 	
 	public boolean findPasswordByIdNameEmail(
 			@Param("loginId") String loginId,
-			@Param("name") String name,
 			@Param("email") String email);
 	
 	public User selectUserByLoginIdPassword(
@@ -28,7 +27,7 @@ public interface UserDAO {
 			@Param("password") String password);
 	
 	// 유저정보(개인페이지)
-	public User selectUserByUserId(int userId);
+	public List<User> selectUserListByUserId(int userId);
 	
 	// 회원탈퇴(조회)
 	public int selectUserByPasswordUserId(
@@ -39,5 +38,19 @@ public interface UserDAO {
 	public void deleteBypasswordUserId(
 			@Param("userId") int userId,
 			@Param("password") String password);
+	
+	// 비밀번호 변경(조회)
+	public int selectPasswordByloginIdEmail(
+			@Param("loginId") String loginId, 
+			@Param("email") String email);
+	
+	// 비밀번호 변경
+	public boolean updatePassword(
+			@Param("password") String password, 
+			@Param("loginId") String loginId);
+	
+	// 프로필 변경
+	public User selectUserByUserId(int userId);
+	
 	
 }

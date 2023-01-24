@@ -11,14 +11,16 @@
 				<%-- 이미지 업로드를 위한 아이콘과 업로드 버튼을 한 행에 멀리 떨어뜨리기 위한 div --%>
 				<div class="d-flex justify-content-between">
 					<div class="file-upload d-flex">
+					
 						<%-- file 태그는 숨겨두고 이미지를 클릭하면 file 태그를 클릭한 것처럼 이벤트를 줄 것이다. --%>
 						<input type="file" id="file" class="d-none" accept=".gif, .jpg, .png, .jpeg">
+						
 						<%-- 이미지에 마우스 올리면 마우스커서가 링크 커서가 변하도록 a 태그 사용 --%>
 						<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
 	
 						<%-- 업로드 된 임시 파일 이름 저장될 곳 --%>
-						<div id="fileName" class="ml-2">
-						</div>
+						<div id="fileName" class="ml-2"></div>
+						
 					</div>
 					<button id="writeBtn" class="btn btn-info">게시</button>
 				</div>
@@ -33,7 +35,7 @@
 				<div class="card border rounded mt-3">
 					<%-- 글쓴이, 더보기(삭제) --%>
 					<div class="p-2 d-flex justify-content-between">
-						<span class="font-weight-bold">${card.user.loginId}</span>
+						<span class="font-weight-bold"><a href="/user/individual_page_view?userId=${card.user.id}" class="individualBtn text-dark" data-user-id="${card.user.id }">${card.user.loginId}</a></span>
 	
 						<%-- 더보기 --%>
 						<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
@@ -252,6 +254,7 @@
 				}
 			});
 		});//->좋아요 버튼 끝
+		
 		
 	});//-> 도큐먼트 끝
 </script>

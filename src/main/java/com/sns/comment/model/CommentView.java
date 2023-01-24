@@ -2,7 +2,7 @@ package com.sns.comment.model;
 
 import com.sns.user.model.User;
 
-// 댓글 1개와 매핑
+// 댓글 1개와 매핑(타임라인BO와 연결)
 public class CommentView {
 	// 댓글 1개
 	private Comment comment;

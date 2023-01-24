@@ -11,7 +11,7 @@
 
 	<c:if test="${not empty userId}">
 		<div class="mr-3">
-			<span><a href="/user/individual_page_view" class="text-dark font-weight-bold">${userName}</a>님 안녕하세요.</span> 
+			<span><a href="/user/individual_page_view?userId=${userId}" class="text-dark font-weight-bold">${userName}</a>님 안녕하세요.</span> 
 			<a href="/user/sign_out" class="ml-2 font-weight-bold">로그아웃</a>
 		</div>
 	</c:if>
