@@ -30,5 +30,4 @@ public class LikeBO {
 		return likeDAO.selectLikeByPostId(postId);
 	}
 	
-	
 }

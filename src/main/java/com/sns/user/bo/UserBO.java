@@ -39,4 +39,13 @@ public class UserBO {
 		return userDAO.selectUserByUserId(userId);
 	}
 	
+	// 회원탈퇴 정보조회
+	public int getUserByPasswordUserId(int userId, String password) {
+		return userDAO.selectUserByPasswordUserId(userId, password);
+	}
+	
+	// 회원탈퇴
+	public void deleteBypasswordUserId(int userId, String password) {
+		userDAO.deleteBypasswordUserId(userId, password);
+	}
 }

@@ -24,6 +24,8 @@ public class CardView {
 	// 내가(로그인 된 사람) 좋아요를 눌렀는지(boolean)
 	private boolean filledLike;
 	
+	
+	
 	// 좋아요개수getter, setter
 	public int getLikeCount() {
 		return likeCount;

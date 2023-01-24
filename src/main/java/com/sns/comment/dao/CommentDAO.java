@@ -20,4 +20,7 @@ public interface CommentDAO {
 	
 	public List<CommentView> generateCommentViewListByPostId(int postId);
 	
+	// 댓글 전체 삭제(회원탈퇴시)
+	public void deleteByUserId(int userId);
+	
 }

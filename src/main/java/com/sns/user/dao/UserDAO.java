@@ -30,4 +30,14 @@ public interface UserDAO {
 	// 유저정보(개인페이지)
 	public User selectUserByUserId(int userId);
 	
+	// 회원탈퇴(조회)
+	public int selectUserByPasswordUserId(
+			@Param("userId") int userId,
+			@Param("password") String password);
+	
+	// 회원탈퇴 (삭제)
+	public void deleteBypasswordUserId(
+			@Param("userId") int userId,
+			@Param("password") String password);
+	
 }

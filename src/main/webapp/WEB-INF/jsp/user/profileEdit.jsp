@@ -25,8 +25,9 @@
 		<!-- input박스 -->
 		<div class="d-flex justify-content-center">
 			<div class="w-75 my-3">
-				<input type="text" class="form-control" placeholder="변경할 이름을 입력해주세요." value="${user.name}">
-				<input type="text" class="form-control mt-3" placeholder="상태메세지를 입력해주세요." value="${user.statusMessage}">
+				<input type="text" class="form-control name" placeholder="변경할 이름을 입력해주세요." value="${user.name}">
+				<input type="text" class="form-control mt-3 statusMessage" placeholder="상태메세지를 입력해주세요." value="${user.statusMessage}">
+				<input type="password" class="form-control mt-3 password" placeholder="비밀번호를 입력해주세요.">
 			</div>
 		</div>
 		
@@ -35,6 +36,83 @@
 				<button class="btn btn-warning w-75" id="profileEditBtn">프로필 수정</button>
 				<button class="btn btn-secondary w-75 my-2" id="exitUserBtn">회원탈퇴</button>
 		</div>
-		
 	</div>
 </div>
+<script>
+	$(document).ready(function(){
+		/* // 프로필 수정버튼
+		$('#profileEditBtn').on('click',function(){
+			//alert(1111);
+			let name = $('.name').val().trim();
+			let statusMessage = $('.statusMessage').val();
+			alert("name : " + name + "\n statusMessage : "+ statusMessage);
+			let userId = ${userId};
+			
+			let formData = new FormData();
+			formData.append("name", name);
+			formData.append("statusMessage", statusMessage);
+			formData.append("userId", userId);
+			
+			$.ajax({
+				// request
+				type:"POST"
+				, url:"/user/profileEdit" + userId
+				, data:formData
+				
+				// response
+				,success:function(data){
+					if(data.code == 1){
+						// 성공
+					} else {
+						// 실패
+					}
+					
+				}
+				, error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			})//-> 프로필수정 ajax끝
+		});// 프로필 수정버튼 끝 */
+		
+		// 회원탈퇴 버튼
+		$('#exitUserBtn').on('click',function(){
+			//alert(111);
+			let name = $('.name').val().trim();
+			let statusMessage = $('.statusMessage').val();
+			let password = $('.password').val();
+			let userId = ${userId};
+			
+			if(name == ''){
+				alert("이름을 입력해주세요.");
+				return;
+			}
+			
+			if(password == ''){
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"DELETE"
+				,url:"/user/withdrawal"
+				,data:{"name":name, "password":password}
+			
+				,success:function(data){
+					if(data.code == 1){
+						alert("회원 탈퇴가 완료되었습니다.");
+						location.href="/user/sign_out";
+						location.href="/timeline/timeline_view";
+					} else {
+						alert(data.errorMessage);
+					}
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
+			
+		});//->탈퇴버튼 끝
+	});//->document끝
+</script>

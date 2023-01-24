@@ -109,7 +109,7 @@ public class UserController {
 	
 	// 프로필 변경 화면
 	@GetMapping("/profile_edit_view")
-	public String porfileEditView(Model model, HttpSession session) {
+	public String profileEditView(Model model, HttpSession session) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
 			return "redirect:/user/sign_in_view";

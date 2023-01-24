@@ -33,4 +33,7 @@ public interface PostDAO {
 	
 	// 글 한개 가져오기
 	public Post selectPostByPostId(int postId);
+	
+	// 글 전체 삭제(회원탈퇴시)
+	public void deleteByUserId(int userId);
 }

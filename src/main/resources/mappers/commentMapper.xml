@@ -49,4 +49,13 @@
 		WHERE
 			`postId` = #{postId}
  	</select>
+ 	
+ 	<!-- 댓글 전체삭제(회원탈퇴시) -->
+ 	<delete id="deleteByUserId" parameterType="int">
+ 		DELETE
+		FROM
+			`comment`
+		WHERE
+			`userId` = #{userId}
+ 	</delete>
  </mapper>

@@ -19,7 +19,7 @@
 					</c:otherwise>
 				</c:choose>
 					<!-- 닉네임 -->
-					<div class="font-weight-bold">${user.loginId}</div>
+					<div class="font-weight-bold">${user.name}</div>
 					<!-- 상태메세지 -->
 					<div id="introduceText">${user.statusMessage}</div>
 				</div>
@@ -66,30 +66,3 @@
 
 	</div>
 </div>
-
-<!-- <script>
-	$(document).ready(function(){
-		$('.emptyImg').on('click',function(){
-			//alert(111);
-			let postId = $(this).data('post-id');
-			//alert(postId);
-			
-			$.ajax({
-				// request
-				url:"/post/update"
-				,data:{"postId":postId}
-				//response
-				,success:function(data){
-					if(data.code == 1){
-						// 접속 
-					}
-				}
-				, error:function(jqXHR, textStatus, errorThrown){
-					var errorMsg = jqXHR.responseJSON.status;
-					alert(errorMsg + ":" + textStatus);
-				}
-			});//-> 이미지 클릭 AJAX끝
-		});//-> img태그 클릭시
-		
-	});//->document end
-</script> -->

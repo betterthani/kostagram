@@ -87,4 +87,11 @@
 		WHERE
 			`id` = #{postId}
  	</select>
+ 	
+ 	<!-- 글 전체삭제(회원탈퇴시) -->
+ 	<delete id="deleteByUserId" parameterType="int">
+ 		DELETE FROM `post`
+ 		WHERE
+ 			`userId` = #{userId}
+ 	</delete>
  </mapper>

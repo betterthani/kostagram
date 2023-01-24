@@ -229,9 +229,13 @@
 			//alert(1111);
 			let postId = $(this).data('post-id');
 			//alert(postId);
+			let userId = ${userId};
+			//alert(userId);
+			
 			$.ajax({
 				url:"/like/" + postId
-				,data:{"postId":postId}
+				,data:{"userId":userId, "postId":postId}
+			
 				,success:function(data){
 					if(data.code == 500){
 						alert(data.errorMessage);

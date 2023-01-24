@@ -83,4 +83,23 @@
 			`id` = #{userId}
  	</select>
  	
+ 	<!-- 회원탈퇴 (조회) -->
+ 	<select id="selectUserByPasswordUserId" resultType="int" parameterType="map">
+ 		SELECT
+ 			COUNT(*)
+		FROM
+			`user`
+		WHERE
+			`id` = #{userId}
+			AND `password` = #{password}
+ 	</select>
+ 	
+ 	<!-- 회원탈퇴(삭제) -->
+ 	<delete id="deleteBypasswordUserId" parameterType="map">
+ 		DELETE FROM `user`
+ 		WHERE
+ 			`id` = #{userId}
+			AND `password` = #{password}
+ 	</delete>
+ 	
  </mapper>

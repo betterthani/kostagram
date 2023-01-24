@@ -57,10 +57,8 @@ public class CommentBO {
 			commentViewList.add(commentView);
 		}
 		
-		return commentViewList;
-		
 		// 결과물 리턴
-		
-		
+		return commentViewList;
 	}
+
 }

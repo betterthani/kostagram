@@ -47,4 +47,13 @@
 			`postId` = #{postId}
  	</select>
  	
+ 	<!-- 좋아요 전체삭제(회원탈퇴시) -->
+ 	<delete id="deleteByUserId" parameterType="int">
+ 		DELETE
+		FROM
+			`like`
+		WHERE
+			`userId` = #{userId}
+ 	</delete>
+ 	
  </mapper>

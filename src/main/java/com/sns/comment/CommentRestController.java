@@ -54,7 +54,6 @@ public class CommentRestController {
 		return result;
 	}
 	
-	// 댓글 불러오기 API
 	
 	
 }
