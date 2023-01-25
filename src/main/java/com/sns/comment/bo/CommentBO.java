@@ -60,5 +60,10 @@ public class CommentBO {
 		// 결과물 리턴
 		return commentViewList;
 	}
+	
+	// 댓글 전체 삭제(회원탈퇴시)
+	public void deleteByUserId(int userId) {
+		commentDAO.deleteByUserId(userId);
+	}
 
 }

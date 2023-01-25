@@ -10,24 +10,36 @@ public class LikeBO {
 	@Autowired
 	private LikeDAO likeDAO;
 	
-	// 좋아요
-	public void addLikeByUserIdPostId(int userId, int postId) {
-		likeDAO.insertLikeByUserIdPostId(userId,postId);
-	}
-	
-	// 좋아요 삭제
-	public int deleteLikeByUserIdPostId(int userId, int postId) {
-		return likeDAO.deleteLikeByUserIdPostId(userId, postId);
-	}
 	
 	// 좋아요 했는지 조회
-	public boolean getLikeByUserIdPostId(int userId, int postId) {
-		return likeDAO.selectLikeByUserIdPostId(userId, postId);
+	public boolean existLike(Integer userId, int postId) { // 비로그인일 경우의 수도 넣기
+		if(userId == null) {// 비로그인
+			return false; // 채워지지 않는 하트 보내기
+		}
+		//return likeDAO.existLike(userId, postId); // 로그인에 대해 처리
+		return likeDAO.selectLikeCountByPostIdOrUserId(postId, userId) > 0 ? true: false;
 	}
 	
 	// 좋아요 카운트
-	public int getLikeByPostId(int postId) {
-		return likeDAO.selectLikeByPostId(postId);
+	public int getLikeCountByPostId(int postId) {
+		//return likeDAO.selectLikeCountByPostId(postId);
+		return likeDAO.selectLikeCountByPostIdOrUserId(postId, null);
 	}
 	
+	public void likeToggle(int postId, int userId) {
+		// 좋아요 있는지 확인
+		if (likeDAO.selectLikeCountByPostIdOrUserId(postId, userId) > 0) {
+			// 있으면 제거
+			likeDAO.deleteLikeByUserIdPostId(userId, postId);
+		} else {
+			// 없으면 추가
+			likeDAO.insertLikeByUserIdPostId(userId, postId);
+		}
+	}
+	
+	// 글 삭제(회원탈퇴시)
+	public void deleteByUserId(int userId) {
+		likeDAO.deleteByUserId(userId);
+	}
+
 }

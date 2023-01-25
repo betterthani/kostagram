@@ -57,11 +57,13 @@
 	
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" onclick="return false" class="like-btn" data-post-id="${card.post.id}">
+						<a href="#" class="like-btn" data-post-id="${card.post.id}">
 							<c:choose>
-								<c:when test="${card.filledLike}">
+								<%--좋아요가 되어있을때 --%>
+								<c:when test="${card.filledLike eq true}">
 									<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="filled heart">
 								</c:when>
+								<%--좋아요가 해제되어있을때 --%>
 								<c:otherwise>
 									<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 								</c:otherwise>
@@ -227,26 +229,30 @@
 		});//->댓글게시 버튼 끝
 		
 		// 좋아요 버튼 누르기
-		$('.like-btn').on('click',function(){
+		$('.like-btn').on('click',function(e){
+			e.preventDefault();
 			//alert(1111);
 			let postId = $(this).data('post-id');
 			//alert(postId);
 			let userId = ${userId};
 			//alert(userId);
+			if(userId == ''){
+				alert("아이디를 입력해주세요.");
+				return;
+			}
 			
 			$.ajax({
+				// requset
 				url:"/like/" + postId
-				,data:{"userId":userId, "postId":postId}
-			
+				
+				// response
 				,success:function(data){
 					if(data.code == 500){
 						alert(data.errorMessage);
 						location.href ="/user/sign_in_view";
-					} else if (data.code == 1){
-						document.location.reload(true);
 					} else {
-						alert(data.result);
-					}
+						document.location.reload(true);
+					} 
 				}
 				,error:function(jqXHR, textStatus, errorThrown){
 					var errorMsg = jqXHR.responseJSON.status;

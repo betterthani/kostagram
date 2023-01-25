@@ -57,7 +57,7 @@
 			
 				<!-- 팔로우 버튼 -->
 				<div class="profileEditBtnBox d-flex justify-content-center align-items-center">
-					<button class="btn btn-primary w-50">팔로우</button>
+					<button class="btn btn-primary w-50 follwBtn" data-user-id="${userPage.user.id}">팔로우</button>
 					<button class="btn btn-secondary w-50 d-none">팔로우 취소</button>
 				</div>
 			</c:otherwise>
@@ -81,10 +81,26 @@
 </div>
 <script>
 	$(document).ready(function(){
-		$('.follwerBtn').on('click',function(){
+		// 팔로우 버튼
+		$('.follwBtn').on('click',function(){
 			// alert(111);
-			let userId = $(this).data('user-id');
-			alert(userId);
+			let follwerId = $(this).data('user-id');
+			let userId = ${sessionId};
+			//alert(follwerId);
+			//alert(userId);
+			
+			$.ajax({
+				url:"/follw/"+follwerId
+				,data:{"follwerId":follwerId, "userId":userId}
+				,success:function(data){
+					// 팔로우 누르면 팔로우 취소 버튼 나오기
+					
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
 		}); //-> 팔로우 버튼 끝
 		
 	});//->document end

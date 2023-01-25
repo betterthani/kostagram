@@ -27,7 +27,9 @@
 			AND `userId` = #{userId}
  	</delete>
  	
- 	<select id="selectLikeByUserIdPostId" parameterType="map" resultType="boolean">
+ 	<!-- 
+ 	좋아요 존재여부
+ 	<select id="existLike" parameterType="map" resultType="boolean">
  		SELECT
  			COUNT(*)
  		FROM
@@ -38,13 +40,27 @@
  			
  	</select>
  	
- 	<select id="selectLikeByPostId" parameterType="int" resultType="int">
+ 	좋아요 개수
+ 	<select id="selectLikeCountByPostId" parameterType="int" resultType="int">
  		SELECT
  			COUNT(*)
  		FROM
  			`like`
  		WHERE
 			`postId` = #{postId}
+ 	</select> -->
+ 	
+ 	<!-- userId의 존재여부 합치기 ( 좋아요 개수 + 좋아요 존재여부 합친거)-->
+ 	<select id="selectLikeCountByPostIdOrUserId" parameterType="map" resultType="int">
+ 		SELECT
+ 			COUNT(*)
+ 		FROM
+ 			`like`
+ 		WHERE
+			`postId` = #{postId}
+			<if test="userId != null">
+			AND `userId` = #{userId}
+			</if>
  	</select>
  	
  	<!-- 좋아요 전체삭제(회원탈퇴시) -->
@@ -55,5 +71,7 @@
 		WHERE
 			`userId` = #{userId}
  	</delete>
+ 	
+ 	
  	
  </mapper>

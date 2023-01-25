@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sns.comment.dao.CommentDAO;
+import com.sns.comment.bo.CommentBO;
 import com.sns.common.FileManagerService;
-import com.sns.like.dao.LikeDAO;
+import com.sns.like.bo.LikeBO;
 import com.sns.post.dao.PostDAO;
 import com.sns.post.model.Post;
 
@@ -22,10 +22,10 @@ public class PostBO {
 	private FileManagerService fileManagerService;
 	
 	@Autowired
-	private CommentDAO commentDAO;
+	private CommentBO commentBO;
 	
 	@Autowired
-	private LikeDAO likeDAO;
+	private LikeBO likeBO;
 	
 	// 글게시
 	public int addPost(int userId, String userLoginId, String content, MultipartFile file) {
@@ -52,7 +52,7 @@ public class PostBO {
 	// output: 없음
 	public void deleteByUserId(int userId) {
 		postDAO.deleteByUserId(userId);
-		commentDAO.deleteByUserId(userId);
-		likeDAO.deleteByUserId(userId);
+		commentBO.deleteByUserId(userId);
+		likeBO.deleteByUserId(userId);
 	}
 }
