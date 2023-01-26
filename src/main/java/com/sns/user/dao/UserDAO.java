@@ -26,9 +26,6 @@ public interface UserDAO {
 			@Param("loginId") String loginId, 
 			@Param("password") String password);
 	
-	// 유저정보(개인페이지)
-	public List<User> selectUserListByUserId(int userId);
-	
 	// 회원탈퇴(조회)
 	public int selectUserByPasswordUserId(
 			@Param("userId") int userId,
@@ -51,6 +48,11 @@ public interface UserDAO {
 	
 	// 프로필 변경
 	public User selectUserByUserId(int userId);
+	
+	
+	// 유저정보(개인페이지)
+	public List<User> selectUserListByUserId(int userId);
+	
 	
 	
 }

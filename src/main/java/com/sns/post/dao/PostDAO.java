@@ -30,10 +30,10 @@ public interface PostDAO {
 	
 	// 게시글 개수
 	public int selectPostCountByUserId(int userId);
-	
+/*
 	// 글 한개 가져오기
 	public Post selectPostByPostId(int postId);
-	
+*/	
 	// 글 전체 삭제(회원탈퇴시)
 	public void deleteByUserId(int userId);
 	
@@ -42,8 +42,8 @@ public interface PostDAO {
 			@Param("postId") int postId, 
 			@Param("userId") int userId);
 	
-	// 글 삭제
+	// 글 삭제(타임라인)
 	public void deleteByPostIdUserId(
-			@Param("postId") int postId, 
+			@Param("postId") int postId,
 			@Param("userId") int userId);
 }

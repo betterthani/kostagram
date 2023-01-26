@@ -21,6 +21,17 @@ public class UserPage {
 	// 팔로잉카운트
 	private int followeeCount;
 	
+	// 팔로우 여부
+	private boolean existFollow;
+	
+	public boolean isExistFollow() {
+		return existFollow;
+	}
+
+	public void setExistFollow(boolean existFollow) {
+		this.existFollow = existFollow;
+	}
+
 	public User getUser() {
 		return user;
 	}

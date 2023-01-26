@@ -1,17 +1,12 @@
 package com.sns.user.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sns.follow.bo.FollowBO;
-import com.sns.post.bo.PostBO;
-import com.sns.post.model.Post;
 import com.sns.user.dao.UserDAO;
 import com.sns.user.model.User;
-import com.sns.user.model.UserPage;
 
 @Service
 public class UserBO {
@@ -19,11 +14,12 @@ public class UserBO {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@Autowired
-	private PostBO postBO;
+	/*
+	 * @Autowired private PostBO postBO;
 	
 	@Autowired
 	private FollowBO followBO;
+	 */
 	
 	// 중복확인
 	public boolean existLoginId(String loginId) {
@@ -71,6 +67,13 @@ public class UserBO {
 	}
 	
 	// 유저정보(개인페이지)
+	public List<User> getUserListByUserId(int userId) {
+		return userDAO.selectUserListByUserId(userId);
+	}
+	
+	/*
+	 * 다른비오에 넣기 -> postbo와 동급의 bo로
+	// 유저정보(개인페이지)
 	public List<UserPage> generateUserPage(int userId,Integer sessionId){
 		List<UserPage> userPageList = new ArrayList<>();
 		
@@ -103,8 +106,5 @@ public class UserBO {
 		
 		return userPageList;
 	}
-	
-	public List<User> getUserListByUserId(int userId){
-		return userDAO.selectUserListByUserId(userId);
-	}
+	*/
 }

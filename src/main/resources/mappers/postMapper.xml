@@ -73,21 +73,6 @@
 			`userId` = #{userId}
  	</select>
  	
- 	<!-- 글 한개 가져오기 -->
- 	<select id="selectPostByPostId" parameterType="int" resultType="com.sns.post.model.Post">
- 		SELECT
- 			`id`
-			,`userId`
-			,`content`
-			,`imgPath`
-			,`createdAt`
-			,`updatedAt`
-		FROM
-			`post`
-		WHERE
-			`id` = #{postId}
- 	</select>
- 	
  	<!-- 글 전체삭제(회원탈퇴시) -->
  	<delete id="deleteByUserId" parameterType="int">
  		DELETE FROM `post`
@@ -95,8 +80,9 @@
  			`userId` = #{userId}
  	</delete>
  	
- 	<!-- 글 가져오기 -->
- 	<select id="selectPostByPostId" parameterType="map" resultType="com.sns.post.model.Post">
+ 	 
+ 	<!--글 가져오기(조회) -->
+ 	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.sns.post.model.Post">
  		SELECT
  			`id`
 			,`userId`
@@ -110,12 +96,28 @@
 			`id` = #{postId}
 			AND `userId` = #{userId}
  	</select>
- 	<!-- 
- 	글 삭제(타임라인에서)
+ 	
+ 	
  	<delete id="deleteByPostIdUserId" parameterType="map">
  		DELETE FROM `post`
  		WHERE
  			`userId` = #{userId}
  			AND `id` = #{postId}
- 	</delete> -->
+ 	</delete>
+ 	
+ <!-- 	
+ 	글 한개 가져오기
+ 	<select id="selectPostByPostId" parameterType="int" resultType="com.sns.post.model.Post">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`content`
+			,`imgPath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+ 	</select> -->
  </mapper>

@@ -62,7 +62,7 @@
 				<!-- 팔로우 버튼 -->
 				<div class="profileEditBtnBox d-flex justify-content-center align-items-center">
 				<c:choose>
-					<c:when test="${existFollow eq true}">
+					<c:when test="${userPage.existFollow eq true}">
 						<button class="btn btn-secondary w-50 followBtn" data-user-id="${userPage.user.id}">팔로우 취소</button>
 					</c:when>
 					<c:otherwise>

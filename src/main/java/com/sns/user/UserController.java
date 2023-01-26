@@ -80,40 +80,7 @@ public class UserController {
 		
 		return "redirect:/user/sign_in_view";
 	}
-	
-	/**
-	 * 개인 페이지
-	 * @param model
-	 * @param userId
-	 * @param session
-	 * @return
-	 */
-	@GetMapping("/individual_page_view")
-	public String individualPageView(
-			Model model,
-			@RequestParam("userId") int userId, 
-			HttpSession session) {
-		
-		// 로그인된 id
-		Integer sessionId = (Integer) session.getAttribute("userId"); 
-		if(sessionId == null){ 
-		 return "redirect:/user/sign_in_view"; 
-		}
-		model.addAttribute("sessionId",sessionId);
-		 
-		List<UserPage> userPageList = userBO.generateUserPage(userId,sessionId);
-		model.addAttribute("userPageList",userPageList);
-		
-		// 팔로우 여부 조회
-		boolean existFollow = followBO.existFollow(userId, sessionId);
-		model.addAttribute("existFollow",existFollow);
-		
-		
-		model.addAttribute("viewName", "user/individualPage");
-		
-		return "template/layout";
-	}
-	
+
 	/**
 	 * 프로필 변경 화면
 	 * @param model
@@ -134,4 +101,39 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	
+	/**
+	 * 개인 페이지
+	 * @param model
+	 * @param userId
+	 * @param session
+	 * @return
+	 */
+	/*
+	@GetMapping("/individual_page_view")
+	public String individualPageView(
+			Model model,
+			@RequestParam("userId") int userId, 
+			HttpSession session) {
+		
+		// 로그인된 id
+		Integer sessionId = (Integer) session.getAttribute("userId"); 
+		if(sessionId == null){ 
+		 return "redirect:/user/sign_in_view"; 
+		}
+		model.addAttribute("sessionId",sessionId);
+		 
+		//List<UserPage> userPageList = userBO.generateUserPage(userId,sessionId);
+		//model.addAttribute("userPageList",userPageList);
+		
+		// 팔로우 여부 조회
+		boolean existFollow = followBO.existFollow(userId, sessionId);
+		model.addAttribute("existFollow",existFollow);
+		
+		
+		model.addAttribute("viewName", "user/individualPage");
+		
+		return "template/layout";
+	}
+	*/
 }

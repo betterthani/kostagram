@@ -35,7 +35,7 @@
 				<div class="card border rounded mt-3">
 					<%-- 글쓴이, 더보기(삭제) --%>
 					<div class="p-2 d-flex justify-content-between">
-						<span class="font-weight-bold"><a href="/user/individual_page_view?userId=${card.user.id}" class="individualBtn text-dark" data-user-id="${card.user.id }">${card.user.loginId}</a></span>
+						<span class="font-weight-bold"><a href="/post/individual_page_view?userId=${card.user.id}" class="individualBtn text-dark" data-user-id="${card.user.id }">${card.user.loginId}</a></span>
 	
 						<%-- 더보기(내가 쓴 글일 떄만 노출) --%>
 						<c:if test="${card.user.id eq userId}">
@@ -59,7 +59,7 @@
 	
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" class="like-btn" data-post-id="${card.post.id}">
+						<a href="#" class="like-btn"  data-user-id="${userId}" data-post-id="${card.post.id}">
 							<c:choose>
 								<%--좋아요가 되어있을때 --%>
 								<c:when test="${card.filledLike eq true}">
@@ -254,10 +254,10 @@
 			//alert(1111);
 			let postId = $(this).data('post-id');
 			//alert(postId);
-			let userId = ${userId};
+			let userId = $(this).data('user-id');
 			//alert(userId);
-			if(userId == ''){
-				alert("아이디를 입력해주세요.");
+			if (userId == '') {
+				alert("로그인을 해주세요");
 				return;
 			}
 			
