@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sns.follow.bo.FollowBO;
 import com.sns.post.bo.PostBO;
 import com.sns.user.bo.UserBO;
 import com.sns.user.model.User;
@@ -25,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	private PostBO postBO;
+	
+	@Autowired
+	private FollowBO followBO;
 	
 	/**
 	 * 회원가입 페이지
@@ -97,8 +101,14 @@ public class UserController {
 		}
 		model.addAttribute("sessionId",sessionId);
 		 
-		List<UserPage> userPageList = userBO.generateUserPage(userId);
+		List<UserPage> userPageList = userBO.generateUserPage(userId,sessionId);
 		model.addAttribute("userPageList",userPageList);
+		
+		// 팔로우 여부 조회
+		boolean existFollow = followBO.existFollow(userId, sessionId);
+		model.addAttribute("existFollow",existFollow);
+		
+		
 		model.addAttribute("viewName", "user/individualPage");
 		
 		return "template/layout";

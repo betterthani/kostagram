@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sns.post.dao.PostDAO;
+import com.sns.follow.bo.FollowBO;
+import com.sns.post.bo.PostBO;
 import com.sns.post.model.Post;
 import com.sns.user.dao.UserDAO;
 import com.sns.user.model.User;
@@ -19,7 +20,10 @@ public class UserBO {
 	private UserDAO userDAO;
 	
 	@Autowired
-	private PostDAO postDAO;
+	private PostBO postBO;
+	
+	@Autowired
+	private FollowBO followBO;
 	
 	// 중복확인
 	public boolean existLoginId(String loginId) {
@@ -67,24 +71,40 @@ public class UserBO {
 	}
 	
 	// 유저정보(개인페이지)
-	public List<UserPage> generateUserPage(int userId){
+	public List<UserPage> generateUserPage(int userId,Integer sessionId){
 		List<UserPage> userPageList = new ArrayList<>();
 		
 		List<User> userList = userDAO.selectUserListByUserId(userId);
 		for(User user : userList) {
+			
 			UserPage userPage = new UserPage();
 			
+			// 유저 1명
 			userPage.setUser(user);
 			
-			List<Post> postList = postDAO.selectPostListByUserId(user.getId());
+			// 글 여러개 
+			List<Post> postList = postBO.getPostListByUserId(user.getId());
 			userPage.setPostList(postList);
 			
-			int count = postDAO.selectPostCountByUserId(user.getId());
+			// 글 카운트
+			int count = postBO.getPostCountByUserId(user.getId());
 			userPage.setPostCount(count);
+			
+			// 팔로워 카운트
+			int followerCount = followBO.followerCountByFollowerId(user.getId());
+			userPage.setFollowerCount(followerCount);
+			
+			// 팔로잉 카운트 (내가 팔로우한 사람들)
+			int followeeCount = followBO.followerCountByUserId(user.getId());
+			userPage.setFolloweeCount(followeeCount);
 			
 			userPageList.add(userPage);
 		}
 		
 		return userPageList;
+	}
+	
+	public List<User> getUserListByUserId(int userId){
+		return userDAO.selectUserListByUserId(userId);
 	}
 }

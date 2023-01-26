@@ -36,4 +36,14 @@ public interface PostDAO {
 	
 	// 글 전체 삭제(회원탈퇴시)
 	public void deleteByUserId(int userId);
+	
+	// 글 조회
+	public Post selectPostByPostIdUserId(
+			@Param("postId") int postId, 
+			@Param("userId") int userId);
+	
+	// 글 삭제
+	public void deleteByPostIdUserId(
+			@Param("postId") int postId, 
+			@Param("userId") int userId);
 }

@@ -37,10 +37,12 @@
 					<div class="p-2 d-flex justify-content-between">
 						<span class="font-weight-bold"><a href="/user/individual_page_view?userId=${card.user.id}" class="individualBtn text-dark" data-user-id="${card.user.id }">${card.user.loginId}</a></span>
 	
-						<%-- 더보기 --%>
+						<%-- 더보기(내가 쓴 글일 떄만 노출) --%>
+						<c:if test="${card.user.id eq userId}">
 						<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
 							<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 						</a>
+						</c:if>
 					</div>
 	
 					<%-- 카드 이미지 --%>
@@ -116,6 +118,24 @@
 		<%--// 타임라인 영역 끝  --%>
 	</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal">
+	<%--modal-sm : 작은 모달 창 --%>
+	<%--modal-dialog-centered: 모달 창 수직으로 가운데 정렬 --%>
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content text-center">
+    	<div class="py-3 border-bottom">
+    		<a href="#" id="deletePostBtn">삭제하기</a>
+    	</div>
+    	<div class="py-3">
+    		<%-- data-dismiss="modal" 모달 창 닫힘 --%>
+    		<a href="#" data-dismiss="modal">취소하기</a>
+    	</div>
+    </div>
+  </div>
+</div>
+
 <script>
 	$(document).ready(function(){
 		//파일 업로드 이미지 클릭 => 숨겨져있는 file을 동작시킴
@@ -261,6 +281,41 @@
 			});
 		});//->좋아요 버튼 끝
 		
+		// 더보기 버튼(...) 클릭 (글 삭제)
+		$('.more-btn').on('click',function(e){
+			e.preventDefault();
+			
+			let postId = $(this).data('post-id'); // getting
+			//alert(postId);
+			
+			$('#modal').data('post-id', postId); // setting 모달 태그에 data-post-id를 심어 넣어줌
+		});//-> 더보기 버튼 끝
+		
+		// 모달 안에있는 삭제하기 버튼 클릭
+		$('#modal #deletePostBtn').on('click',function(e){
+			e.preventDefault();
+			
+			let postId = $('#modal').data('post-id');
+			//alert(postId);
+			
+			// ajax 글 삭제
+			$.ajax({
+				type:"DELETE"
+				,url:"/post/delete"
+				,data:{"postId" : postId}
+			
+				,success:function(data){
+					if(data.code == 1){
+						alert("삭제에 성공했습니다.");
+						location.href="/timeline/timeline_view"
+					}
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
+		});//-> 모달 삭제버튼 끝
 		
 	});//-> 도큐먼트 끝
 </script>

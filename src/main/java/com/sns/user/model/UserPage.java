@@ -2,6 +2,7 @@ package com.sns.user.model;
 
 import java.util.List;
 
+import com.sns.follow.model.Follow;
 import com.sns.post.model.Post;
 
 public class UserPage {
@@ -13,8 +14,12 @@ public class UserPage {
 	
 	// 게시물 수
 	private int postCount;
-
-	// 팔로워, 팔로우
+	
+	// 팔로워카운트
+	private int followerCount;
+	
+	// 팔로잉카운트
+	private int followeeCount;
 	
 	public User getUser() {
 		return user;
@@ -39,8 +44,23 @@ public class UserPage {
 	public void setPostCount(int postCount) {
 		this.postCount = postCount;
 	}
-	
-	
-	
-	
+
+	public int getFollowerCount() {
+		return followerCount;
+	}
+
+	public void setFollowerCount(int followerCount) {
+		this.followerCount = followerCount;
+	}
+
+	public int getFolloweeCount() {
+		return followeeCount;
+	}
+
+	public void setFolloweeCount(int followeeCount) {
+		this.followeeCount = followeeCount;
+	}
+
+
+
 }

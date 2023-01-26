@@ -29,4 +29,9 @@ public interface LikeDAO {
 			@Param("postId") int postId,
 			@Param("userId") Integer userId);
 	
+	// 글 삭제(타임라인)
+	public void deleteByPostIdUserId(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
+	
 }

@@ -26,6 +26,7 @@ public class LikeBO {
 		return likeDAO.selectLikeCountByPostIdOrUserId(postId, null);
 	}
 	
+	// 좋아요 클릭
 	public void likeToggle(int postId, int userId) {
 		// 좋아요 있는지 확인
 		if (likeDAO.selectLikeCountByPostIdOrUserId(postId, userId) > 0) {
@@ -41,5 +42,13 @@ public class LikeBO {
 	public void deleteByUserId(int userId) {
 		likeDAO.deleteByUserId(userId);
 	}
+	
+	// 글 삭제(타임라인)
+	public void deleteByPostIdUserId(int postId, int userId) {
+		likeDAO.deleteByPostIdUserId(postId, userId);
+	}
+	
+	
+	
 
 }

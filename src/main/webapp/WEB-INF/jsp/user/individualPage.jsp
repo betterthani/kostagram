@@ -35,13 +35,17 @@
 				<!-- 팔로워 -->
 				<div class="mini_box">
 					<div>팔로워</div>
-					<div>3</div>
+					<div>
+						${userPage.followerCount}
+					</div>
 				</div>
 				
 				<!-- 팔로잉 -->
 				<div class="mini_box">
 					<div>팔로잉</div>
-					<div>3</div>
+					<div>
+						${userPage.followeeCount}
+					</div>
 				</div>
 			</div>
 		
@@ -57,8 +61,16 @@
 			
 				<!-- 팔로우 버튼 -->
 				<div class="profileEditBtnBox d-flex justify-content-center align-items-center">
-					<button class="btn btn-primary w-50 follwBtn" data-user-id="${userPage.user.id}">팔로우</button>
-					<button class="btn btn-secondary w-50 d-none">팔로우 취소</button>
+				<c:choose>
+					<c:when test="${existFollow eq true}">
+						<button class="btn btn-secondary w-50 followBtn" data-user-id="${userPage.user.id}">팔로우 취소</button>
+					</c:when>
+					<c:otherwise>
+						<!-- 팔로우 중 -->
+						<button class="btn btn-primary w-50 followBtn" data-user-id="${userPage.user.id}">팔로우</button>
+					</c:otherwise>
+				</c:choose>
+					
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -82,18 +94,22 @@
 <script>
 	$(document).ready(function(){
 		// 팔로우 버튼
-		$('.follwBtn').on('click',function(){
+		$('.followBtn').on('click',function(){
 			// alert(111);
-			let follwerId = $(this).data('user-id');
+			let followerId = $(this).data('user-id');
 			let userId = ${sessionId};
-			//alert(follwerId);
+			//alert(followerId);
 			//alert(userId);
-			
+						
 			$.ajax({
-				url:"/follw/"+follwerId
-				,data:{"follwerId":follwerId, "userId":userId}
+				url:"/follow/"+followerId
+				,data:{"followerId":followerId, "userId":userId}
 				,success:function(data){
-					// 팔로우 누르면 팔로우 취소 버튼 나오기
+					if(data.code == 1){
+						document.location.reload();
+					} else {
+						alert("실패, 관리자에 문의하세요.");
+					}
 					
 				}
 				,error:function(jqXHR, textStatus, errorThrown){

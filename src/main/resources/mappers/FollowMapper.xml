@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sns.follow.dao.FollowDAO">
+ 	<!-- 조회 -->
+ 	<select id="selectFollowByFollwerIdUserId" resultType="Integer" parameterType="map">
+ 		SELECT
+ 			`userId`
+			,`followerId`
+			,`createdAt`
+ 		FROM
+ 			`follow`
+ 		WHERE
+ 			`followerId` = #{followerId}
+ 			AND `userId` = #{userId}
+ 	</select>
+ 	
+ 	<delete id="deleteFollowByFollowerIdUserId" parameterType="map">
+ 		DELETE
+		FROM
+			`follow`
+		WHERE
+			`followerId` = #{followerId}
+			AND `userId` = #{userId}
+ 	</delete>
+ 	
+ 	<insert id="insertFollowByFollowerIdUserId">
+ 		INSERT INTO `follow`
+ 		(
+ 			`userId`
+			,`followerId`
+			,`createdAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			,#{followerId}
+ 			,NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<!-- 팔로우 카운트 -->
+ 	<select id="followerCountByFollowerId" resultType="int" parameterType="map">
+ 		SELECT
+ 			COUNT(*)
+ 		FROM
+ 			`follow`
+ 		WHERE
+		 	`followerId` = #{followerId}
+ 	</select>
+ 	
+ 	<!-- 팔로잉 카운트 -->
+ 	<select id="followerCountByUserId" resultType="int" parameterType="map">
+ 		SELECT
+ 			COUNT(*)
+ 		FROM
+ 			`follow`
+ 		WHERE
+		 	`userId` = #{userId}
+ 	</select>
+ 	
+ </mapper>

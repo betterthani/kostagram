@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sns.comment.bo.CommentBO;
 import com.sns.common.EncryptUtils;
 import com.sns.post.bo.PostBO;
 import com.sns.user.bo.UserBO;
@@ -26,6 +27,9 @@ public class UserRestController {
 	
 	@Autowired
 	private PostBO postBO;
+	
+	@Autowired
+	private CommentBO commentBO;
 	
 	/**
 	 * 아이디 중복확인 API
@@ -223,6 +227,7 @@ public class UserRestController {
 			// 정보가 있을때 삭제
 			userBO.deleteBypasswordUserId(userId, hashedPassword);
 			postBO.deleteByUserId(userId);
+			commentBO.deleteByUserId(userId);
 			result.put("code", 1);
 		} else {
 			// 정보 없으니 삭제 불가

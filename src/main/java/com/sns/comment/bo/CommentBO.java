@@ -65,5 +65,10 @@ public class CommentBO {
 	public void deleteByUserId(int userId) {
 		commentDAO.deleteByUserId(userId);
 	}
+	
+	// 댓글 삭제(타임라인)
+	public void deleteByPostIdUserId(int postId, int userId) {
+		commentDAO.deleteByPostIdUserId(postId, userId);
+	}
 
 }

@@ -1,8 +1,8 @@
-package com.sns.follw.model;
+package com.sns.follow.model;
 
 import java.util.Date;
 
-public class Follw {
+public class Follow {
 	private int userId;
 	private int follwerId;
 	private Date createdAt;

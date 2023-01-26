@@ -58,4 +58,14 @@
 		WHERE
 			`userId` = #{userId}
  	</delete>
+ 	
+ 	<!-- 댓글 삭제(타임라인) -->
+ 	<delete id="deleteByPostIdUserId" parameterType="map">
+ 		DELETE
+		FROM
+			`comment`
+		WHERE
+			`userId` = #{userId}
+			AND `postId` = #{postId}
+ 	</delete>
  </mapper>

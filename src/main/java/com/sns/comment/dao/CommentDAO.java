@@ -23,4 +23,9 @@ public interface CommentDAO {
 	// 댓글 전체 삭제(회원탈퇴시)
 	public void deleteByUserId(int userId);
 	
+	// 댓글 삭제(타임라인)
+	public void deleteByPostIdUserId(
+			@Param("postId") int postId,
+			@Param("userId") int userId);
+	
 }

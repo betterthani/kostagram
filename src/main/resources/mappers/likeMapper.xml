@@ -71,7 +71,15 @@
 		WHERE
 			`userId` = #{userId}
  	</delete>
- 	
- 	
+ 	<!-- 
+ 	좋아요 삭제(타임라인)
+ 	<delete id="deleteByUserId" parameterType="int">
+ 		DELETE
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+ 	</delete> -->
  	
  </mapper>
