@@ -120,4 +120,18 @@
 		WHERE
 			`id` = #{postId}
  	</select>
+ 	
+ 	<!-- 프로필 수정 -->
+ 	<update id="postUpdate" parameterType="map">
+ 		UPDATE `post`
+ 		SET
+ 			`content`= #{content}
+ 			<if test="imgPath != null">
+ 			, `imgPath` = #{imgPath}
+ 			</if>
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{postId}
+ 			AND	`userId` = #{userId}
+ 	</update>
  </mapper>

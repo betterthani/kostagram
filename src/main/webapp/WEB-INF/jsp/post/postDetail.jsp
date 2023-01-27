@@ -40,11 +40,13 @@
 			
 			<!-- 접속자와 post의 userId동일할때만 보이기 -->
 			<c:if test="${post.userId eq userId}">
+			
 				<!-- 수정버튼 -->
-				<button type="button" class="btn btn-primary ml-2" id="editBtn">수정</button>
+				<button type="button" class="btn btn-primary ml-2" id="editBtn" data-user-id="${userId}" data-post-id="${post.id}">수정</button>
 				
 				<!-- 삭제버튼 -->
-				<button type="button" class="btn btn-dark ml-2" id="delBtn">삭제</button>
+				<button type="button" class="btn btn-dark ml-2" id="delBtn" data-user-id="${userId}" data-post-id="${post.id}">삭제</button>
+				
 			</c:if>
 			
 			</div>
@@ -54,26 +56,92 @@
 </div>
 <script>
 	$(document).ready(function(){
-		// 프리뷰
-		/* $('#file').on('change',function(){
-			//alert(111);
-			setImageFromFile(this, '#previewImg');
-		});//->프리뷰 끝
-		function setImageFromFile(input, expression) {
-		    if (input.files && input.files[0]) {
-		    var reader = new FileReader();
-		    reader.onload = function (e) {
-		    $(expression).attr('src', e.target.result);
-		  }
-		  reader.readAsDataURL(input.files[0]);
-		  }
-		} */
+		// 이미지 선택시 사진 보여지기
+		 $('#file').on('change',function(){
+			 setImageFromFile(this, '.postDetailBox');
+		 });
+		 function setImageFromFile(input, expression) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+			    reader.onload = function (e) {
+			    $(expression).attr('src', e.target.result);
+				}
+			reader.readAsDataURL(input.files[0]);
+			}
+		}
 		
 		// 수정버튼
 		$('#editBtn').on('click',function(){
-			//alert(111);
+			let content = $('#content').val();
+			let file = $('#file').val();
+			let userId = $(this).data('user-id');
+			let postId = $(this).data('post-id');
 			
+			if(file != ''){
+				let ext = file.split(".").pop().toLowerCase();
+				if($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1){
+					alert("지원하는 확장자가 아닙니다.");
+					$('#file').val("");
+					return;
+				}
+			}
+			
+			let formData = new FormData();
+			formData.append("content", content);
+			formData.append("file", $('#file')[0].files[0]);
+			formData.append("userId", userId);
+			formData.append("postId", postId);
+			
+			$.ajax({
+				
+				//request
+				type:"PUT"
+				,url:"/post/update"
+				,data:formData
+				,enctype:"multipart/form-data"
+				,processData:false
+				,contentType:false
+				
+				//respose
+				,success:function(data){
+					if(data.code == 1){
+						// 성공
+						alert("수정 완료되었습니다.");
+						document.location.reload(true);
+					} else {
+						// 실패
+						alert("수정 실패.");
+					}
+				}
+				, error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
 		});//->수정버튼 클릭 끝
+		
+		// 삭제버튼
+		$('#delBtn').on('click',function(){
+			let userId = $(this).data('user-id');
+			let postId = $(this).data('post-id');
+			
+			$.ajax({
+				type:"DELETE"
+				,url:"/post/delete"
+				,data:{"postId" : postId}
+			
+				,success:function(data){
+					if(data.code == 1){
+						alert("삭제에 성공했습니다.");
+						location.href="/post/individual_page_view?userId="+userId;
+					}
+				}
+				,error:function(jqXHR, textStatus, errorThrown){
+					var errorMsg = jqXHR.responseJSON.status;
+					alert(errorMsg + ":" + textStatus);
+				}
+			});
+		});//->삭제버튼 끝
 	});//->document 끝
 
 </script>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -187,10 +188,16 @@ public class UserRestController {
 
 	}
 
-	
-	  // 프로필 수정 API
-	 
-	 @PostMapping("/profileEdit") 
+	/**
+	 * 프로필 수정 API
+	 * @param name
+	 * @param statusMessage
+	 * @param password
+	 * @param file
+	 * @param session
+	 * @return
+	 */
+	 @PutMapping("/profileEdit") 
 	 public Map<String, Object> profileEdit(
 		  @RequestParam("name") String name,
 		  @RequestParam(value="statusMessage",required = false) String statusMessage,
@@ -203,14 +210,21 @@ public class UserRestController {
 	  
 		int userId = (int) session.getAttribute("userId");
 		String userLoginId = (String)session.getAttribute("userLoginId");
-		  
-		// update db
-		userBO.updateUser(name, statusMessage, userId, userLoginId, hashedPassword, file);
-		  
+		
 		Map<String, Object> result = new HashMap<>();
-		result.put("code", 1);
-		result.put("result", "성공");
-			
+		
+		// 비밀번호 맞는지 select
+		int rowCount = userBO.getUserByPasswordUserId(userId, hashedPassword);
+		if(rowCount > 0) {
+			// update db
+			userBO.updateUser(name, statusMessage, userId, userLoginId, hashedPassword, file);
+			result.put("code", 1);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 400);
+			result.put("result", "비밀번호 미일치");
+		}
+		  
 		return result;
 	 }
 	

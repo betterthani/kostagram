@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +67,34 @@ public class PostRestController {
 		
 		int userId = (int)session.getAttribute("userId");
 		postBO.deletePostByPostIdUserId(postId, userId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+		
+		return result;
+	}
+	
+	/**
+	 * 글 수정
+	 * @param content
+	 * @param file
+	 * @param postId
+	 * @param session
+	 * @return
+	 */
+	@PutMapping("/update")
+	public Map<String, Object> postUpdate(
+			@RequestParam("content") String content,
+			@RequestParam(value="file",required = false) MultipartFile file,
+			@RequestParam("postId") int postId,
+			HttpSession session){
+		
+		int userId = (int) session.getAttribute("userId");
+		String userLoginId = (String) session.getAttribute("userLoginId");
+		
+		// db update
+		postBO.postUpdate(userId, postId, userLoginId, content, file);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 1);

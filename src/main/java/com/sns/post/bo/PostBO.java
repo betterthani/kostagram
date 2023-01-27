@@ -146,4 +146,23 @@ public class PostBO {
 		return userPageList;
 	}
 	
+	// 글 수정
+	public void postUpdate(int userId, int postId, String userLoginId, String content, MultipartFile file) {
+		// 기존 글
+		Post post = getPostByPostIdUserId(postId, userId);
+		
+		// 수정할게 있을때
+		String imgPath = null;
+		if(file != null) {
+			imgPath = fileManagerService.savaFile(userLoginId, file);
+			
+			if(imgPath != null && post.getImgPath() != null) {
+				fileManagerService.deleteFile(post.getImgPath());
+			}
+		}
+		
+		// db update
+		postDAO.postUpdate(userId, postId, userLoginId, content, imgPath);
+		
+	}
 }

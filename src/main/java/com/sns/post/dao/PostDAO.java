@@ -46,4 +46,12 @@ public interface PostDAO {
 	public void deleteByPostIdUserId(
 			@Param("postId") int postId,
 			@Param("userId") int userId);
+	
+	// 글 수정
+	public void postUpdate(
+			@Param("userId") int userId, 
+			@Param("postId") int postId, 
+			@Param("userLoginId") String userLoginId, 
+			@Param("content") String content, 
+			@Param("imgPath") String imgPath);
 }

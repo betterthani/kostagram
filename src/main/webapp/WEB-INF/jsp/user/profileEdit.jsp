@@ -27,7 +27,7 @@
 			<div class="w-75 my-3">
 				<input type="text" class="form-control name" placeholder="변경할 이름을 입력해주세요." value="${user.name}">
 				<input type="text" class="form-control mt-3 statusMessage" placeholder="상태메세지를 입력해주세요." value="${user.statusMessage}">
-				<input type="password" class="form-control mt-3 password" placeholder="비밀번호를 입력해주세요.">
+				<input type="password" class="form-control mt-3 password" placeholder="기존 비밀번호를 입력해주세요.">
 			</div>
 		</div>
 		
@@ -66,10 +66,15 @@
 			//alert("name : " + name + "\n statusMessage : "+ statusMessage + "\npassword:"+password);
 			let userId = ${userId};
 			let password = $('.password').val();
-			
 			let file = $('#file').val();
+			
 			if(name == ''){
 				alert("사용할 이름을 입력해주세요.");
+				return;
+			}
+			
+			if(password == ''){
+				alert("기존 비밀번호를 입력해주세요.");
 				return;
 			}
 			
@@ -91,12 +96,12 @@
 			
 			$.ajax({
 				// request
-				type:"POST"
+				type:"PUT"
 				, url:"/user/profileEdit"
 				, data:formData
 				, enctype:"multipart/form-data"
-					, processData:false
-					, contentType:false
+				, processData:false
+				, contentType:false
 					
 				// response
 				,success:function(data){
@@ -104,6 +109,10 @@
 						// 성공
 						alert("수정 완료되었습니다.");
 						location.href="/post/individual_page_view?userId="+userId;
+					} else if (data.code == 400){
+						// 비밀번호 조회 실패
+						alert("기존 비밀번호와 맞지 않습니다.");
+						document.location.reload();
 					} else {
 						// 실패
 						alert("수정 실패.");

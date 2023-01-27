@@ -37,6 +37,8 @@ public class PostController {
 			return "redirect:/user/sign_in_view";
 		}
 		
+		String userLoginId = (String) session.getAttribute("userLoginId");
+		
 		Post post = postBO.getPostByPostId(postId);
 		model.addAttribute("post",post);
 		
