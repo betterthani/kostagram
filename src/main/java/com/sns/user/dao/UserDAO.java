@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.user.model.User;
 
@@ -53,6 +54,13 @@ public interface UserDAO {
 	// 유저정보(개인페이지)
 	public List<User> selectUserListByUserId(int userId);
 	
-	
+	// 프로필 수정
+	public void updateUser(
+			@Param("name") String name, 
+			@Param("statusMessage") String statusMessage, 
+			@Param("userId") int userId, 
+			@Param("userLoginId") String userLoginId, 
+			@Param("password") String password, 
+			@Param("profileImgPath") String profileImgPath);
 	
 }

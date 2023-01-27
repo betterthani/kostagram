@@ -14,19 +14,39 @@
 				<!-- <img src="" class="postDetailBox w-100" alt="본문 이미지" id="previewImg"> -->
 		</div>
 		
-		<!-- 작성글 박스 -->
-		<textarea class="form-control" id="content" placeholder="내용을 입력하세요." rows="3">${post.content}</textarea>
+		<!-- 작성글 박스(작성자가 아닌 게시물의 경우 그냥 글만 보여지기) -->
+		<c:choose>
+			<c:when test="${post.userId eq userId}">
+				<textarea class="form-control" id="content" placeholder="내용을 입력하세요." rows="3">${post.content}</textarea>
+			</c:when>
+			<c:otherwise>
+				<div>${post.content}</div>
+			</c:otherwise>
+		</c:choose>
 		<!-- 파일 버튼 -->
 		<div class="d-flex justify-content-end my-1">
-			<input type="file" id="file" accept=".jpg, .png, .jpeg, .gif" class="files">
+			<!-- 접속자와 post의 userId동일할때만 보이기 -->
+			<c:if test="${post.userId eq userId}">
+				<input type="file" id="file" accept=".jpg, .png, .jpeg, .gif" class="files">
+			</c:if>
 		</div>
 		
 		<!-- 버튼 -->
 		<div class="d-flex justify-content-between my-3">
-			<a href="/user/individual_page_view" class="btn btn-info">뒤로가기</a>
+			<!-- 뒤로가기 버튼 -->
+			<a href="/post/individual_page_view?userId=${post.userId}" class="btn btn-info">뒤로가기</a>
+			
 			<div class="d-flex justify-content-end ">
+			
+			<!-- 접속자와 post의 userId동일할때만 보이기 -->
+			<c:if test="${post.userId eq userId}">
+				<!-- 수정버튼 -->
 				<button type="button" class="btn btn-primary ml-2" id="editBtn">수정</button>
+				
+				<!-- 삭제버튼 -->
 				<button type="button" class="btn btn-dark ml-2" id="delBtn">삭제</button>
+			</c:if>
+			
 			</div>
 		</div>
 		

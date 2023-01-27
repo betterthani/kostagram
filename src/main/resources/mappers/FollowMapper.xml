@@ -59,4 +59,28 @@
 		 	`userId` = #{userId}
  	</select>
  	
+ 	<!-- 팔로잉 조회(유저로 조회) -->
+ 	<select id="selectFolloweeListByUserId" resultType="com.sns.follow.model.Follow" parameterType="int">
+ 		SELECT
+ 			`userId`
+			,`followerId`
+			,`createdAt`
+ 		FROM
+ 			`follow`
+ 		WHERE
+		 	`userId` = #{userId}
+ 	</select>
+ 	
+ 	<!-- 팔로워 조회(유저로 조회) -->
+ 	<select id="selectFollowerListByFollowerId" resultType="com.sns.follow.model.Follow" parameterType="int">
+ 		SELECT
+ 			`userId`
+			,`followerId`
+			,`createdAt`
+ 		FROM
+ 			`follow`
+ 		WHERE
+		 	`followerId` = #{followerId}
+ 	</select>
+ 	
  </mapper>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.comment.bo.CommentBO;
 import com.sns.common.EncryptUtils;
@@ -186,22 +187,33 @@ public class UserRestController {
 
 	}
 
-	/*
-	 * // 프로필 수정 API
-	 * 
-	 * @PostMapping("/profileEdit/{userId}") public Map<String, Object> profileEdit(
-	 * 
-	 * @RequestParam("name") String name,
-	 * 
-	 * @RequestParam(value="statusMessage",required = false) String statusMessage,
-	 * HttpSession session){ Integer userId = (Integer)
-	 * session.getAttribute("userId");
-	 * 
-	 * // update db
-	 * 
-	 * 
-	 * }
-	 */
+	
+	  // 프로필 수정 API
+	 
+	 @PostMapping("/profileEdit") 
+	 public Map<String, Object> profileEdit(
+		  @RequestParam("name") String name,
+		  @RequestParam(value="statusMessage",required = false) String statusMessage,
+		  @RequestParam("password") String password,
+		  @RequestParam(value="file",required = false) MultipartFile file,
+		  HttpSession session){ 
+		 
+		// 해싱
+		String hashedPassword = EncryptUtils.md5(password);
+	  
+		int userId = (int) session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		  
+		// update db
+		userBO.updateUser(name, statusMessage, userId, userLoginId, hashedPassword, file);
+		  
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+			
+		return result;
+	 }
+	
 
 	/**
 	 * 회원 탈퇴 API

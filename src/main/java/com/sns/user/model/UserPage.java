@@ -6,6 +6,7 @@ import com.sns.follow.model.Follow;
 import com.sns.post.model.Post;
 
 public class UserPage {
+	
 	// 유저 1명(기준)
 	private User user;
 	

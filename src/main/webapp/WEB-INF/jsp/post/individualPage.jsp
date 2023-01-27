@@ -36,7 +36,9 @@
 				<div class="mini_box">
 					<div>팔로워</div>
 					<div>
+					<a href="/follow/follower_list_view?userId=${userPage.user.id}" class="text-dark font-weight-bold">
 						${userPage.followerCount}
+					</a>
 					</div>
 				</div>
 				
@@ -44,7 +46,9 @@
 				<div class="mini_box">
 					<div>팔로잉</div>
 					<div>
+					<a href="/follow/followee_list_view?userId=${userPage.user.id}" class="text-dark font-weight-bold">
 						${userPage.followeeCount}
+					</a>
 					</div>
 				</div>
 			</div>

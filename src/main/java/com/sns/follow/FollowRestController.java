@@ -19,6 +19,12 @@ public class FollowRestController {
 	@Autowired
 	private FollowBO followBO;
 	
+	/**
+	 * 팔로우,해제 API
+	 * @param followerId
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/{followerId}")
 	public Map<String,Object> follw(@PathVariable int followerId,HttpSession session){
 		Integer userId = (Integer) session.getAttribute("userId");

@@ -2,24 +2,26 @@ package com.sns.user.bo;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.sns.common.FileManagerService;
 import com.sns.user.dao.UserDAO;
 import com.sns.user.model.User;
 
 @Service
 public class UserBO {
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private UserDAO userDAO;
 	
-	/*
-	 * @Autowired private PostBO postBO;
-	
 	@Autowired
-	private FollowBO followBO;
-	 */
+	private FileManagerService fileManagerService;
 	
 	// 중복확인
 	public boolean existLoginId(String loginId) {
@@ -71,40 +73,29 @@ public class UserBO {
 		return userDAO.selectUserListByUserId(userId);
 	}
 	
-	/*
-	 * 다른비오에 넣기 -> postbo와 동급의 bo로
-	// 유저정보(개인페이지)
-	public List<UserPage> generateUserPage(int userId,Integer sessionId){
-		List<UserPage> userPageList = new ArrayList<>();
+	// 프로필 수정
+	public void updateUser(String name, String statusMessage, int userId, String userLoginId, String password, MultipartFile file) {
 		
-		List<User> userList = userDAO.selectUserListByUserId(userId);
-		for(User user : userList) {
-			
-			UserPage userPage = new UserPage();
-			
-			// 유저 1명
-			userPage.setUser(user);
-			
-			// 글 여러개 
-			List<Post> postList = postBO.getPostListByUserId(user.getId());
-			userPage.setPostList(postList);
-			
-			// 글 카운트
-			int count = postBO.getPostCountByUserId(user.getId());
-			userPage.setPostCount(count);
-			
-			// 팔로워 카운트
-			int followerCount = followBO.followerCountByFollowerId(user.getId());
-			userPage.setFollowerCount(followerCount);
-			
-			// 팔로잉 카운트 (내가 팔로우한 사람들)
-			int followeeCount = followBO.followerCountByUserId(user.getId());
-			userPage.setFolloweeCount(followeeCount);
-			
-			userPageList.add(userPage);
+		// 기존 유저
+		User user = getUserByUserId(userId);
+		if(user == null) {
+			logger.warn("[update User] 수정할 유저 정보가 없습니다. userId:{}",userId);
+			return;
 		}
 		
-		return userPageList;
+		// 수정할게 있을 때
+		String profileImgPath = null;
+		if(file != null) {
+			profileImgPath = fileManagerService.savaFile(userLoginId, file);
+			
+			if(profileImgPath != null && user.getProfileImgPath() != null) {
+				fileManagerService.deleteFile(user.getProfileImgPath());
+			}
+		}
+		
+		// db update
+		userDAO.updateUser(name, statusMessage, userId, userLoginId, password, profileImgPath);
+		
 	}
-	*/
+	
 }

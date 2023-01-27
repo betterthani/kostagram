@@ -37,7 +37,7 @@ public class PostController {
 			return "redirect:/user/sign_in_view";
 		}
 		
-		Post post = postBO.getPostByPostIdUserId(postId, userId);
+		Post post = postBO.getPostByPostId(postId);
 		model.addAttribute("post",post);
 		
 		model.addAttribute("viewName", "post/postDetail");

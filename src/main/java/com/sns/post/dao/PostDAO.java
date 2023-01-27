@@ -30,10 +30,10 @@ public interface PostDAO {
 	
 	// 게시글 개수
 	public int selectPostCountByUserId(int userId);
-/*
-	// 글 한개 가져오기
+
+	// 글 한개 가져오기(글 상세)
 	public Post selectPostByPostId(int postId);
-*/	
+
 	// 글 전체 삭제(회원탈퇴시)
 	public void deleteByUserId(int userId);
 	

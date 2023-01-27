@@ -105,8 +105,8 @@
  			AND `id` = #{postId}
  	</delete>
  	
- <!-- 	
- 	글 한개 가져오기
+ 	
+ 	<!-- 글 한개 가져오기(글 상세) -->
  	<select id="selectPostByPostId" parameterType="int" resultType="com.sns.post.model.Post">
  		SELECT
  			`id`
@@ -119,5 +119,5 @@
 			`post`
 		WHERE
 			`id` = #{postId}
- 	</select> -->
+ 	</select>
  </mapper>

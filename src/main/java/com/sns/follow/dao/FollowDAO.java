@@ -31,4 +31,10 @@ public interface FollowDAO {
 	// 팔로잉 카운트
 	public int followerCountByUserId(int userId);
 	
+	// 팔로잉 조회
+	public List<Follow> selectFolloweeListByUserId(int userId);
+	
+	// 팔로우아이디로 조회
+	public List<Follow> selectFollowerListByFollowerId(int followerId);
+	
 }

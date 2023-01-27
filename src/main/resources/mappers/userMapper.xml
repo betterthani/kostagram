@@ -166,4 +166,19 @@
 			`id` = #{userId}
  	</select>
  	
+ 	<!-- 프로필 수정 -->
+ 	<update id="updateUser" parameterType="map">
+ 		UPDATE `user`
+ 		SET
+ 			`name`= #{name}
+ 			, `statusMessage` = #{statusMessage}
+ 			<if test="profileImgPath != null">
+ 			, `profileImgPath` = #{profileImgPath}
+ 			</if>
+ 			, `password` = #{password}
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{userId}
+ 	</update>
+ 	
  </mapper>

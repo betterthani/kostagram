@@ -55,12 +55,12 @@ public class PostBO {
 	public List<Post> getPostList() {
 		return postDAO.selectPostList();
 	}
-/*
+
 	// 글 한개 가져오기(상세페이지)
 	public Post getPostByPostId(int postId) {
 		return postDAO.selectPostByPostId(postId);
 	}
-*/
+
 	// 글 삭제(회원탈퇴시)
 	// input : userId
 	// output: 없음
@@ -145,4 +145,5 @@ public class PostBO {
 
 		return userPageList;
 	}
+	
 }
