@@ -6,7 +6,8 @@ Kostagram은 인스타 그램을 벤치마킹한 CRUD기반 SNS입니다.<br>
 - 프로젝트 기간: 23년 01월 12일 ~ 23년 01월 27일
 - 개발환경
   - 언어: Java, HTML, CSS, JavaScript, SQL
-  - 프레임워크: Spring, MyBatis, Bootstrap
+  - 프레임워크: Spring, MyBatis
+  - 라이브러리 : jQuery, Bootstrap, JSTL
 
 ## 시연 동영상
 - https://youtu.be/jgo8w1fQsSc
